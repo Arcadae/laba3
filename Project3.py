@@ -4,13 +4,13 @@
 
 import random
 
-def is_prime(num):
-    if num < 2:
-        return False
-    for i in range(2, int(num**0.5) + 1):
-        if num % i == 0:
-            return False
-    return True
+#def is_prime(num):
+    #if num < 2:
+        #return False
+    #for i in range(2, int(num**0.5) + 1):
+        #if num % i == 0:
+            #return False
+    #return True
 
 def create_matrix(N):
     return [[random.randint(-10, 10) for _ in range(N)] for _ in range(N)]
@@ -50,11 +50,15 @@ def product_in_odd_rows(D):
     return product
 
 def main():
-    K = int(input("Введите число K: "))
-    N = int(input("Введите размерность матрицы N: "))
+    try:
+        K = int(input("Введите число K: "))
+        N = int(input("Введите размерность матрицы N: "))
+    except ValueError:
+        print('Число N ,или число K ,или оба числа не целые')
+        return
 
-    if N % 2 != 0:
-        print("N должно быть четным.")
+    if N < 6:
+        print("N должно быть больше , как минимум -6- , для корректного выполнения.")
         return
 
     A = create_matrix(N)
@@ -95,5 +99,8 @@ def main():
     print_matrix(result)
 
 if __name__ == "__main__":
+    main()
+
+
     main()
 

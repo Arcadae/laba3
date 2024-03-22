@@ -40,10 +40,10 @@ def count_greater_than_K_in_even_columns(E, K):
 
 def product_in_odd_rows(E):
     product = 1
-    for i in range(len(E)//2,len(E)):
+    for i in range(len(E)//2,len(E),3):
         for j in range(len(E)-(i+1)+1,len(E)//2):
             product *= E[i][j]
-    for i in range(len(E)//2,len(E)):
+    for i in range(len(E)//2,len(E),3):
         for j in range(len(E)//2,i):
             product *= E[i][j]
     return product

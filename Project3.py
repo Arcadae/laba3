@@ -4,16 +4,8 @@
 
 import random
 
-#def is_prime(num):
-    #if num < 2:
-        #return False
-    #for i in range(2, int(num**0.5) + 1):
-        #if num % i == 0:
-            #return False
-    #return True
-
 def create_matrix(N):
-    return [[random.randint(-10, 10) for _ in range(N)] for _ in range(N)]
+    return [[random.randint(0, 10) for _ in range(N)] for _ in range(N)]
 
 def print_matrix(matrix):
     for row in matrix:
@@ -33,22 +25,35 @@ def matrix_multiplication(A, B):
             for k in range(len(B)):
                 result[i][j] += A[i][k] * B[k][j]
     return result
-
+    
 def count_greater_than_K_in_even_columns(E, K):
     count = 0
-    for row in E:
-        for i in range(1, len(row), 2):  
-            if row[i] > K:
-                count += 1
+    for i in range(len(E)//2):
+        for j in range(0,i,2):
+            if E[i][j]>K:
+                count += E[i][j] 
+    for i in range(len(E)//2,len(E)):
+        for j in range(0,len(E)-(i+1),2):
+            if E[i][j]>K:
+                count += E[i][j]
     return count
 
-def product_in_odd_rows(D):
+def product_in_odd_rows(E):
     product = 1
-    for i in range(0, len(D), 2):  
-        for val in D[i]:
-            product *= val
+    for i in range(len(E)//2,len(E)):
+        for j in range(len(E)-(i+1)+1,len(E)//2):
+            product *= E[i][j]
+    for i in range(len(E)//2,len(E)):
+        for j in range(len(E)//2,i):
+            product *= E[i][j]
     return product
-
+    
+def swap_elements(E):
+    for i in range(len(E)//2):
+        for j in range(i+1,len(E)-(i+1)):
+            E[i][j],E[len(E)-j-1][len(E)-i-1] = E[len(E)-j-1][len(E)-i-1], E[i][j]
+    return E
+            
 def main():
     try:
         K = int(input("Введите число K: "))
@@ -71,11 +76,11 @@ def main():
     D = [row[:mid] for row in A[mid:]]
     E = [row[mid:] for row in A[mid:]]
 
-    if count_greater_than_K_in_even_columns(E, K) > product_in_odd_rows(D):
-        E, D = D, E  
+    if count_greater_than_K_in_even_columns(E,K)>product_in_odd_rows(E):
+        swap_elements(E)
     else:
-        C, B = B, C  
-
+        C, B = B, C
+    
     F = [B[i] + C[i] for i in range(mid)] + [D[i] + E[i] for i in range(mid)]
 
     print("Матрица F после преобразований:")
@@ -100,4 +105,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
